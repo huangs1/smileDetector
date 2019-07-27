@@ -1,0 +1,15 @@
+{
+	"show_video": false,
+	"use_dropbox": true,
+	"dropbox_key": "jvajbhv2yd1w4gx",
+	"dropbox_secret": "3k2ibhy4qwtu8ud",
+	"dropbox_access_token": "KJgT6FOvpzAAAAAAAAAANR_p9-97N55oFL80jvYjN1Ix8MqVaSj-h2qmJU1lZ2ZH",
+	"dropbox_base_path": "Team Swap",
+	"min_upload_seconds": 6.0,
+	"min_motion_frames": 8,
+	"camera_warmup_time": 2.5,
+	"delta_thresh": 5,
+	"resolution": [640, 480],
+	"fps": 16,
+	"min_area": 5000
+}
