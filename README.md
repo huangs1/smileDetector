@@ -1,11 +1,13 @@
 # smileDetector
 
-The program's purpose is detect and track smiles through a webcam.
+The program's purpose is detect and track smiles through a webcam. THe program will launch and start up a window that has an initial video recording that will not be saved anywhere. If there is a smile detected throughout the video, then the program will take a snapshot of that instance and save it to a dropbox folder (that file can be accessed with the link below). 
 
-### Instructions to run our program:
+### Instructions to run the program:
 - Connect the webcam to your computer if your computer doesn't already have one
 - Enter to the correct directory
 - Please make sure that you have all the dependencies downloaded
+  - python
+  - OpenCV (if you are running Ubuntu OS: [use this link](https://www.pyimagesearch.com/2018/05/28/ubuntu-18-04-how-to-install-opencv/) to install OpenCV)
   - datetime
   - dropbox
 - Run the following command
