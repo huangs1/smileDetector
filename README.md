@@ -8,7 +8,7 @@ The program's purpose is detect and track smiles through a webcam. The program w
 - Please make sure that you have all the dependencies downloaded
   - python
   - OpenCV (if you are running Ubuntu OS: [use this link](https://www.pyimagesearch.com/2018/05/28/ubuntu-18-04-how-to-install-opencv/) to install OpenCV)
-  - datetime
+  - imuntils
   - dropbox
 - Run the following command
 ```python smileDetector.py --face cascades/haarcascade_frontalface_default.xml --eye cascades/smile.xml --conf conf.json```
