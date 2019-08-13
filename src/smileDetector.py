@@ -69,9 +69,9 @@ while True:
 	if args.get("video") and not grabbed:
 		break
 
-	# draw the text and timestamp on the frame
+	# draw the text and timestamp on the frame (adjust text placement based on size of frame)
 	ts = timestamp.strftime("%A %d %B %Y %I:%M:%S%p")
-	cv2.putText(frame, ts, (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX,
+	cv2.putText(frame, ts, (10, 450), cv2.FONT_HERSHEY_SIMPLEX,
 		0.35, (0, 0, 255), 1)
 
 	# resize the frame and convert it to grayscale
