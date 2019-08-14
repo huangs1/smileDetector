@@ -1,17 +1,17 @@
 # import the necessary packages
 import cv2
 
-class EyeTracker:
-	def __init__(self, faceCascadePath, eyeCascadePath):
-		# load the face and eye detector
+class SmileTracker:
+	def __init__(self, faceCascadePath, smileCascadePath):
+		# load the face and smile detector
 		self.faceCascade = cv2.CascadeClassifier(faceCascadePath)
-		self.eyeCascade = cv2.CascadeClassifier(eyeCascadePath)
+		self.smileCascade = cv2.CascadeClassifier(smileCascadePath)
 
 	def track(self, image):
 		# detect faces in the image and initialize the list of
-		# rectangles containing the faces and eyes
+		# rectangles containing the faces and smiles
 		faceRects = self.faceCascade.detectMultiScale(image,
-			scaleFactor = 1.1, minNeighbors = 5, minSize = (30, 30),
+			scaleFactor = 1.1, minNeighbors = 10, minSize = (30, 30),
 			flags = cv2.CASCADE_SCALE_IMAGE)
 		rects = []
 
@@ -21,18 +21,17 @@ class EyeTracker:
 			# bounding boxes
 			faceROI = image[fY:fY + fH, fX:fX + fW]
 			rects.append((fX, fY, fX + fW, fY + fH))
-			
-			# detect eyes in the face ROI
-			eyeRects = self.eyeCascade.detectMultiScale(faceROI,
-				scaleFactor = 1.1, minNeighbors = 10, minSize = (20, 20),
+
+			smileRects = self.smileCascade.detectMultiScale(faceROI,
+				scaleFactor = 1.1, minNeighbors = 45, minSize = (36, 36),
 				flags = cv2.CASCADE_SCALE_IMAGE)
 
-			# loop over the eye bounding boxes
-			for (eX, eY, eW, eH) in eyeRects:
+			# loop over the smile bounding boxes
+			for (sX, sY, sW, sH) in smileRects:
 				# update the list of boounding boxes
 				rects.append(
-					(fX + eX, fY + eY, fX + eX + eW, fY + eY + eH))
+					(fX + sX, fY + sY, fX + sX + sW, fY + sY + sH))
 
 		# return the rectangles representing bounding
-		# boxes around the faces and eyes
+		# boxes around the faces and smiles
 		return rects

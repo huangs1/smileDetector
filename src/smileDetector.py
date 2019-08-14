@@ -1,8 +1,8 @@
 # USAGE
-# python smileDetector.py --face cascades/haarcascade_frontalface_default.xml --eye cascades/smile.xml --conf conf.json
+# python smileDetector.py --face cascades/haarcascade_frontalface_default.xml --conf conf.json
 
 # import the necessary packages
-from imagesearch.eyetracker import EyeTracker
+from imagesearch.smileTracker import SmileTracker
 from imagesearch import imutils
 from imagesearch.tempimage import tempimage
 import argparse
@@ -18,8 +18,8 @@ import cv2
 ap = argparse.ArgumentParser()
 ap.add_argument("-f", "--face", required = True,
 	help = "path to where the face cascade resides")
-ap.add_argument("-e", "--eye", required = True,
-	help = "path to where the eye cascade resides")
+ap.add_argument("-s", "--smile", required = True,
+	help = "path to where the smile cascade resides")
 ap.add_argument("-v", "--video",
 	help = "path to the (optional) video file")
 ap.add_argument("-c", "--conf", required=True,
@@ -46,8 +46,8 @@ avg = None
 lastUploaded = datetime.datetime.now()
 motionCounter = 0
 
-# construct the eye tracker
-et = EyeTracker(args["face"], args["eye"])
+# construct the smile tracker
+et = SmileTracker(args["face"], args["smile"])
 
 # if a video path was not supplied, grab the reference
 # to the gray
@@ -78,7 +78,7 @@ while True:
 	frame = imutils.resize(frame, width = 1200)
 	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-	# detect faces and eyes in the image
+	# detect faces and smile in the image
 	rects = et.track(gray)
 	text = "No Smiles anywhere"
 	# loop over the face bounding boxes and draw them
@@ -88,46 +88,43 @@ while True:
 		cv2.putText(frame, "Emotion: {}".format(text), (10, 35),
 			cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 2)
 
-	# show the tracked eyes and face
+	# show the tracked smile and face
 	cv2.imshow("Tracking", frame)
 
-	# check to see if the room is occupied
-	if text == "Smile Detected":
+	# check to see if there are smiles
+	if text == "Smile Detected" and len(rects) > 2:
 		# check to see if enough time has passed between uploads
 		if (timestamp - lastUploaded).seconds >= conf["min_upload_seconds"]:
 			# increment the motion counter
 			motionCounter += 1
-
 			# check to see if the number of frames with consistent motion is
 			# high enough
 			if motionCounter >= conf["min_motion_frames"]:
-				# check to see if dropbox sohuld be used
+				# check to see if dropbox should be used
 				if conf["use_dropbox"]:
 					# write the image to temporary file
 					t = tempimage()
 					cv2.imwrite(t.path, frame)
-
-					# upload the image to Dropbox and cleanup the tempory image
+					# upload the image to Dropbox and cleanup the temporary image
 					print("[UPLOAD] {}".format(ts))
 					path = "/{base_path}/{timestamp}.jpg".format(
 					    base_path=conf["dropbox_base_path"], timestamp=ts)
 					client.files_upload(open(t.path, "rb").read(), path)
 					t.cleanup()
-
 				# update the last uploaded timestamp and reset the motion
 				# counter
 				lastUploaded = timestamp
 				motionCounter = 0
-
 	# otherwise, the room is not occupied
 	else:
 		motionCounter = 0
-
 	# if the 'q' key is pressed, stop the loop
 	if cv2.waitKey(1) & 0xFF == ord("q"):
 		break
 
+# Uncomment the line below if you want to use a picamera
+# rawCapture.truncate(0)
+
 # cleanup the camera and close any open windows
-rawCapture.truncate(0)
 camera.release()
 cv2.destroyAllWindows()

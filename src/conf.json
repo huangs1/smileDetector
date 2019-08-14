@@ -5,11 +5,11 @@
 	"dropbox_secret": "9ode17uw2al329h",
 	"dropbox_access_token": "Q5UXE0h3YHAAAAAAAAAAR7KMlgvl2VBw__XZ52ESuynhGeXxzxYjF7rPzUCrFn1a",
 	"dropbox_base_path": "Smile Detector",
-	"min_upload_seconds": 6.0,
-	"min_motion_frames": 8,
+	"min_upload_seconds": 5.0,
+	"min_motion_frames": 10,
 	"camera_warmup_time": 2.5,
 	"delta_thresh": 5,
 	"resolution": [640, 480],
-	"fps": 16,
+	"fps": 15,
 	"min_area": 5000
 }
