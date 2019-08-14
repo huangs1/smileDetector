@@ -21,6 +21,9 @@ class SmileTracker:
 			# bounding boxes
 			faceROI = image[fY:fY + fH, fX:fX + fW]
 			rects.append((fX, fY, fX + fW, fY + fH))
+
+		# return the rectangles representing bounding
+		# boxes around the faces
 		return rects
 
 	def track2(self, image):
@@ -43,6 +46,7 @@ class SmileTracker:
 				# update the list of boounding boxes
 				rects2.append(
 					(fX + sX, fY + sY, fX + sX + sW, fY + sY + sH))
+
 		# return the rectangles representing bounding
-		# boxes around the faces and smiles
+		# boxes around the smiles
 		return rects2
