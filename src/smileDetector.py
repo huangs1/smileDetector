@@ -1,5 +1,5 @@
 # USAGE
-# python smileDetector.py --face cascades/haarcascade_frontalface_default.xml --conf conf.json
+# python smileDetector.py --face cascades/haarcascade_frontalface_default.xml --smile cascades/smile.xml--conf conf.json
 
 # import the necessary packages
 from imagesearch.smileTracker import SmileTracker
