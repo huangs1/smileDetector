@@ -80,11 +80,17 @@ while True:
 
 	# detect faces and smile in the image
 	rects = et.track(gray)
-	text = "No Smiles anywhere"
+	rects2= et.track2(gray)
+	text = "Temp"
 	# loop over the face bounding boxes and draw them
 	for rect in rects:
 		cv2.rectangle(frame, (rect[0], rect[1]), (rect[2], rect[3]), (0, 255, 0), 2)
-		text = "Smile Detected"
+		text = "Face Detected"
+		for rect2 in rects2:
+			cv2.rectangle(frame, (rect2[0], rect2[1]), (rect2[2], rect2[3]), (0, 255, 0), 2)
+			text = "Smile Detected"
+			cv2.putText(frame, "Emotion: {}".format(text), (10, 35),
+				cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 2)
 		cv2.putText(frame, "Emotion: {}".format(text), (10, 35),
 			cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 2)
 
@@ -92,7 +98,7 @@ while True:
 	cv2.imshow("Tracking", frame)
 
 	# check to see if there are smiles
-	if text == "Smile Detected" and len(rects) > 2:
+	if text == "Smile Detected":
 		# check to see if enough time has passed between uploads
 		if (timestamp - lastUploaded).seconds >= conf["min_upload_seconds"]:
 			# increment the motion counter
